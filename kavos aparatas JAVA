@@ -1,0 +1,138 @@
+import java.util.concurrent.SynchronousQueue;
+
+import javax.swing.plaf.synth.SynthSpinnerUI;
+
+public class KavosAparatas {
+
+	int cukrausKiekis;
+	int kavosPupeliuKiekis;
+	int vandensKiekis;
+	String spalva;
+	int panaudojimuSkaicius;
+	int panaudojimuSkaiciausRiba = 10;
+	int kiekLikoikiPlovimo;
+
+	// konstruktoriai
+	public KavosAparatas() {
+	}
+
+	public KavosAparatas(String gamintojas, int gaminimoMetai) {
+	}
+
+	public KavosAparatas(String gamintojas, int gaminimoMetai, String spalva) {
+	}
+
+	private void setSpalva(String spalva) {
+		this.spalva = spalva;
+	}
+
+	public String getSpalva() {
+		return spalva;
+	}
+
+	public void pildykVandens(int pridetasVanduo) {
+		vandensKiekis = vandensKiekis + pridetasVanduo;
+	}
+
+	public void pildykPupeliu(int pridetosPupeles) {
+		kavosPupeliuKiekis = kavosPupeliuKiekis + pridetosPupeles;
+	}
+
+	public void pildykCukraus(int pridetasCukrus) {
+		cukrausKiekis = cukrausKiekis + pridetasCukrus;
+	}
+
+	public void gaminkKava(String kavosTipas) {
+		if (this.cukrausKiekis >= 2 && this.kavosPupeliuKiekis >= 4 && this.vandensKiekis >= 4
+				&& this.panaudojimuSkaicius < panaudojimuSkaiciausRiba) {
+			switch (kavosTipas) {
+			case "americano":
+				this.vandensKiekis = this.vandensKiekis - 4;
+				this.kavosPupeliuKiekis = this.kavosPupeliuKiekis - 3;
+				this.cukrausKiekis = this.cukrausKiekis - 1;
+				this.panaudojimuSkaicius++;
+				System.out.println("pasirinktas kavos tipas " + kavosTipas + " yra ruosiamas");
+				break;
+			case "juoda kava":
+				vandensKiekis = vandensKiekis - 4;
+				kavosPupeliuKiekis = kavosPupeliuKiekis - 2;
+				cukrausKiekis = cukrausKiekis - 2;
+				panaudojimuSkaicius++;
+				System.out.println("pasirinktas kavos tipas " + kavosTipas + " yra ruosiamas");
+				break;
+			case "espresso":
+				vandensKiekis = vandensKiekis - 1;
+				kavosPupeliuKiekis = kavosPupeliuKiekis - 4;
+				cukrausKiekis = cukrausKiekis - 1;
+				panaudojimuSkaicius++;
+				System.out.println("pasirinktas kavos tipas " + kavosTipas + " yra ruosiamas");
+				break;
+			case "doubleEspresso":
+				vandensKiekis = vandensKiekis - 2;
+				kavosPupeliuKiekis = kavosPupeliuKiekis - 4;
+				cukrausKiekis = cukrausKiekis - 2;
+				panaudojimuSkaicius++;
+				System.out.println("pasirinktas kavos tipas " + kavosTipas + " yra ruosiamas");
+				break;
+			default:
+				System.out.println("ivedete neteisinga pavadinima " + kavosTipas + " bandykite dar kart.");
+			}
+		} else {
+			System.out.println("papildykite masina");
+		}
+	}
+
+	public void aparatoBusena() {
+		System.out.println("cukraus kiekis yra " + this.cukrausKiekis);
+		System.out.println("vandens kiekis yra " + this.vandensKiekis);
+		System.out.println("pupeliu kiekis yra " + this.kavosPupeliuKiekis);
+		this.kiekLikoikiPlovimo = panaudojimuSkaiciausRiba - this.panaudojimuSkaicius;
+		System.out.println("iki plovimo liko  " + this.kiekLikoikiPlovimo + " panaudojimai");
+	}
+
+	public int plaukAparata() {
+		this.panaudojimuSkaicius = 0;
+		return 0;
+	}
+
+	public boolean arPasiruosesAparatas() {
+		if (this.panaudojimuSkaicius > panaudojimuSkaiciausRiba) {
+			System.out.println("Pasiektas maximalus naudojimo skaicius");
+		}
+		if (this.vandensKiekis < 4) {
+			System.out.println("Papildykite vandens!");
+		}
+		if (this.kavosPupeliuKiekis < 4) {
+			System.out.println("Papildykite pupeles!");
+		}
+		if (this.cukrausKiekis < 2) {
+			System.out.println("Papildykite cukraus!");
+		} else {
+			System.out.println("pasiruoses");
+		}
+		return true;
+	}
+
+	public static void main(String[] args) {
+
+		KavosAparatas nero = new KavosAparatas();
+		nero.pildykVandens(100);
+		nero.pildykPupeliu(100);
+		nero.pildykCukraus(100);
+		nero.gaminkKava("americano");
+		nero.gaminkKava("americano");
+		nero.gaminkKava("americano");
+		nero.gaminkKava("americano");
+		nero.gaminkKava("doubleEspresso");
+		nero.aparatoBusena();
+
+		nero.setSpalva("raudona");
+		System.out.println(nero.getSpalva());
+		// nero.arPasiruosesAparatas();
+		// nero.plaukAparata();
+		// System.out.println(nero.panaudojimuSkaicius);
+		// System.out.println(nero.cukrausKiekis);
+
+	}
+
+}
